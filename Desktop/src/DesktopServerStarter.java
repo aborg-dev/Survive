@@ -1,3 +1,4 @@
+import com.esotericsoftware.minlog.Log;
 import survive.server.SurviveServer;
 
 /**
@@ -9,7 +10,13 @@ import survive.server.SurviveServer;
  */
 public class DesktopServerStarter {
     public static void main(String[] args) {
+        Log.set(Log.LEVEL_DEBUG);
         SurviveServer server = new SurviveServer();
-        server.run();
+        try {
+            server.run();
+        } catch (Exception ex) {
+            Log.error("Failed to start server.");
+            ex.printStackTrace();
+        }
     }
 }
