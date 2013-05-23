@@ -8,9 +8,9 @@ package survive.common.gameobject;
  * To change this template use File | Settings | File Templates.
  */
 public class Character extends GameObject {
-    public Character(int id) {
-        super(id);
-    }
+	public Character(int id) {
+		super(id);
+	}
 
-    public int x, y;
+	public int x, y;
 }

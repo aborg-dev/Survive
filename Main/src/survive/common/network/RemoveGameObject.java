@@ -8,9 +8,9 @@ package survive.common.network;
  * To change this template use File | Settings | File Templates.
  */
 public class RemoveGameObject {
-    public RemoveGameObject(int id) {
-        this.id = id;
-    }
+	public RemoveGameObject(int id) {
+		this.id = id;
+	}
 
-    public int id;
+	public int id;
 }

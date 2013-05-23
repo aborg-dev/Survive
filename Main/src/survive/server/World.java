@@ -19,48 +19,48 @@ import java.util.concurrent.atomic.AtomicInteger;
  * To change this template use File | Settings | File Templates.
  */
 public class World {
-    private ConcurrentHashMap<Integer, GameObject> gameObjects = new ConcurrentHashMap<Integer, GameObject>();
-    private ConcurrentHashMap<String, Integer> playerId = new ConcurrentHashMap<String, Integer>();
-    private AtomicInteger lastGameObjectId = new AtomicInteger(0);
-    private WorldConstrains worldConstrains;
-    private Random random = new Random();
+	private ConcurrentHashMap<Integer, GameObject> gameObjects = new ConcurrentHashMap<Integer, GameObject>();
+	private ConcurrentHashMap<String, Integer> playerId = new ConcurrentHashMap<String, Integer>();
+	private AtomicInteger lastGameObjectId = new AtomicInteger(0);
+	private WorldConstrains worldConstrains;
+	private Random random = new Random();
 
-    World() {
-        worldConstrains = new WorldConstrains(128, 128);
-        Log.info("World created.");
-    }
+	World() {
+		worldConstrains = new WorldConstrains(128, 128);
+		Log.info("World created.");
+	}
 
-    public void addGameObject(GameObject gameObject) {
-        gameObjects.put(gameObject.getId(), gameObject);
-        Log.debug("Game object " + gameObject.getId() + " added.");
-    }
+	public void addGameObject(GameObject gameObject) {
+		gameObjects.put(gameObject.getId(), gameObject);
+		Log.debug("Game object " + gameObject.getId() + " added.");
+	}
 
-    public void putInRandomPosition(Character character) {
-        character.x = random.nextInt() % worldConstrains.getHeight();
-        character.y = random.nextInt() % worldConstrains.getWidth();
-    }
+	public void putInRandomPosition(Character character) {
+		character.x = random.nextInt() % worldConstrains.getHeight();
+		character.y = random.nextInt() % worldConstrains.getWidth();
+	}
 
-    public Player addPlayer(String name) {
-        Player player = new Player(getNewId());
-        player.setName(name);
-        playerId.put(name, player.getId());
-        putInRandomPosition(player);
-        addGameObject(player);
-        return player;
-    }
+	public Player addPlayer(String name) {
+		Player player = new Player(getNewId());
+		player.setName(name);
+		playerId.put(name, player.getId());
+		putInRandomPosition(player);
+		addGameObject(player);
+		return player;
+	}
 
-    public int getPlayerId(String playerName) {
-        return playerId.get(playerName);
-    }
+	public int getPlayerId(String playerName) {
+		return playerId.get(playerName);
+	}
 
-    public Iterable<GameObject> getPlayerGameObjects(String playerName) {
-        List<GameObject> playerGameObjects = new ArrayList<GameObject>();
-        playerGameObjects.addAll(gameObjects.values());
-        return playerGameObjects;
-    }
+	public Iterable<GameObject> getPlayerGameObjects(String playerName) {
+		List<GameObject> playerGameObjects = new ArrayList<GameObject>();
+		playerGameObjects.addAll(gameObjects.values());
+		return playerGameObjects;
+	}
 
-    private int getNewId() {
-        return lastGameObjectId.getAndAdd(1);
-    }
+	private int getNewId() {
+		return lastGameObjectId.getAndAdd(1);
+	}
 
 }

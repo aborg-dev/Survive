@@ -11,7 +11,7 @@ import com.badlogic.gdx.Game;
  */
 public class SurviveClient extends Game {
 
-    @Override
-    public void create() {
-    }
+	@Override
+	public void create() {
+	}
 }

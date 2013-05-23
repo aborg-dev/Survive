@@ -8,18 +8,18 @@ package survive.server;
  * To change this template use File | Settings | File Templates.
  */
 public class WorldConstrains {
-    public WorldConstrains(int height, int width) {
-        this.height = height;
-        this.width = width;
-    }
+	public WorldConstrains(int height, int width) {
+		this.height = height;
+		this.width = width;
+	}
 
-    public int getHeight() {
-        return height;
-    }
+	public int getHeight() {
+		return height;
+	}
 
-    public int getWidth() {
-        return width;
-    }
+	public int getWidth() {
+		return width;
+	}
 
-    int height, width;
+	int height, width;
 }

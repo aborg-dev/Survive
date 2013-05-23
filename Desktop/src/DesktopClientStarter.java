@@ -10,12 +10,12 @@ import survive.client.SurviveClient;
  * To change this template use File | Settings | File Templates.
  */
 public class DesktopClientStarter {
-    public static void main(String[] args) {
-        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Survive";
-        cfg.useGL20 = true;
-        cfg.width = 800;
-        cfg.height = 480;
-        new LwjglApplication(new SurviveClient(), cfg);
-    }
+	public static void main(String[] args) {
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "Survive";
+		cfg.useGL20 = true;
+		cfg.width = 800;
+		cfg.height = 480;
+		new LwjglApplication(new SurviveClient(), cfg);
+	}
 }

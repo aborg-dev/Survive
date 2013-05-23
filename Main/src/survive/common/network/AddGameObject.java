@@ -10,9 +10,9 @@ import survive.common.gameobject.GameObject;
  * To change this template use File | Settings | File Templates.
  */
 public class AddGameObject {
-    public AddGameObject(GameObject gameObject) {
-        this.gameObject = gameObject;
-    }
+	public AddGameObject(GameObject gameObject) {
+		this.gameObject = gameObject;
+	}
 
-    GameObject gameObject;
+	GameObject gameObject;
 }

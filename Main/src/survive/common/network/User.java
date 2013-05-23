@@ -8,13 +8,13 @@ package survive.common.network;
  * To change this template use File | Settings | File Templates.
  */
 public class User {
-    public User(String name) {
-        this.name = name;
-    }
+	public User(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    String name;
+	String name;
 }

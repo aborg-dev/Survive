@@ -8,5 +8,5 @@ package survive.common.network;
  * To change this template use File | Settings | File Templates.
  */
 public class Login {
-    public String name;
+	public String name;
 }

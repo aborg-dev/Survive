@@ -12,14 +12,14 @@ import survive.common.gameobject.Player;
  * To change this template use File | Settings | File Templates.
  */
 public class Network {
-    static public final int port = 55455;
+	static public final int port = 55455;
 
-    static public void register(EndPoint endPoint) {
-        Kryo kryo = endPoint.getKryo();
-        kryo.register(Login.class);
-        kryo.register(Character.class);
-        kryo.register(Player.class);
-        kryo.register(AddGameObject.class);
-        kryo.register(RemoveGameObject.class);
-    }
+	static public void register(EndPoint endPoint) {
+		Kryo kryo = endPoint.getKryo();
+		kryo.register(Login.class);
+		kryo.register(Character.class);
+		kryo.register(Player.class);
+		kryo.register(AddGameObject.class);
+		kryo.register(RemoveGameObject.class);
+	}
 }
