@@ -2,36 +2,60 @@ package survive.client.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import survive.client.SurviveClient;
 
 public class MainMenu extends SurviveScreen {
 	private static final String fontName = "Main/data/fonts/CarnevaleeFreakshow.ttf";
 	private FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(fontName));
-	private TextButton button;
+	private BitmapFont menuFont = generator.generateFont(32);
+
+	private TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+	private TextButton playButton;
+
+	private TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
+	private TextField loginField;
 
 	public MainMenu(SurviveClient surviveClient) {
 		super(surviveClient);
 
-		TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-		style.font = generator.generateFont(32);
-		style.fontColor = Color.WHITE;
-		style.overFontColor = Color.RED;
-		style.downFontColor = Color.YELLOW;
+		textButtonStyle.font = menuFont;
+		textButtonStyle.fontColor = Color.WHITE;
+		textButtonStyle.overFontColor = Color.RED;
+		textButtonStyle.downFontColor = Color.YELLOW;
 
-		button = new TextButton("Hello!", style);
-		button.setTransform(true);
+		playButton = new TextButton("Play", textButtonStyle);
+		playButton.setPosition(-menuFont.getBounds(playButton.getText()).width / 2, -menuFont.getBounds(playButton.getText()).height);
 
-		stage.addActor(button);
+		Pixmap whitePixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+		whitePixmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		whitePixmap.fill();
+		Texture whiteTexture = new Texture(whitePixmap);
+		Image whiteImage = new Image(whiteTexture);
+
+		textFieldStyle.font = menuFont;
+		textFieldStyle.fontColor = Color.WHITE;
+		textFieldStyle.cursor = whiteImage.getDrawable();
+		textFieldStyle.selection = whiteImage.getDrawable();
+		loginField = new TextField("Enter", textFieldStyle);
+		loginField.setCursorPosition(2);
+		//loginField.
+
+		stage.addActor(playButton);
+		stage.addActor(loginField);
 	}
 
 	@Override
 	public void update(float delta) {
 		stage.act(delta);
-		BitmapFont.TextBounds bounds = button.getStyle().font.getBounds(button.getText());
-		stage.getCamera().position.set(button.getX() + bounds.width / 2, button.getY() + bounds.height / 2, 0f);
+		loginField.setPosition(-loginField.getWidth() / 2, 0.0f);
+		stage.getCamera().position.set(0.0f, 0.0f, 0.0f);
 		stage.getCamera().update();
 	}
 
