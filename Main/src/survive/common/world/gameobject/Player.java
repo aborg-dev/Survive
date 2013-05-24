@@ -1,6 +1,8 @@
 package survive.common.world.gameobject;
 
+import survive.common.network.SetDirection;
 import survive.common.network.SetMovement;
+import survive.common.utils.Direction;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,8 +24,12 @@ public class Player extends Character {
 		this.name = name;
 	}
 
-	public void setMovement(SetMovement movement) {
-		isMoving = movement.isMoving;
+	public void setMovement(boolean isMoving) {
+		this.isMoving = isMoving;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 	String name;

@@ -19,6 +19,9 @@ public class Character extends GameObject {
 		this.position = position;
 	}
 
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
 
 	@Override
 	public void update(float delta) {

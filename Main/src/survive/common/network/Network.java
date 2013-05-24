@@ -23,6 +23,8 @@ public class Network {
 		kryo.register(Player.class);
 		kryo.register(NPC.class);
 		kryo.register(AddGameObject.class);
+		kryo.register(SetMovement.class);
+		kryo.register(SetDirection.class);
 		kryo.register(RemoveGameObject.class);
 		kryo.register(LoginResponse.class);
 		kryo.register(WorldConstrains.class);

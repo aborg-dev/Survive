@@ -1,6 +1,8 @@
 package survive.server;
 
+import survive.common.network.SetDirection;
 import survive.common.network.SetMovement;
+import survive.common.utils.Direction;
 import survive.common.utils.Position;
 import survive.common.world.WorldConstrains;
 import survive.common.world.gameobject.GameObject;
@@ -80,9 +82,15 @@ public class World {
 		}
 	}
 
-	public void setPlayerMovement(String playerName, SetMovement actionSetMovement) {
+	public void setPlayerMovement(String playerName, boolean isMoving) {
 		int playerId = getPlayerId(playerName);
 		Player player = (Player) gameObjects.get(playerId);
-		player.setMovement(actionSetMovement);
+		player.setMovement(isMoving);
+	}
+
+	public void setPlayerDirection(String playerName, Direction direction) {
+		int playerId = getPlayerId(playerName);
+		Player player = (Player) gameObjects.get(playerId);
+		player.setDirection(direction);
 	}
 }

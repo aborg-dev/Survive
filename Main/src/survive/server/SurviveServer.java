@@ -90,8 +90,17 @@ public class SurviveServer {
 						return;
 					}
 
-					world.setPlayerMovement(connection.userName, (SetMovement) object);
+					world.setPlayerMovement(connection.userName, ((SetMovement) object).isMoving);
 					return;
+				}
+
+				if (object instanceof SetDirection) {
+					if (connection.userName == null) {
+						connection.close();
+						return;
+					}
+
+					world.setPlayerDirection(connection.userName, ((SetDirection) object).direction);
 				}
 			}
 		});
