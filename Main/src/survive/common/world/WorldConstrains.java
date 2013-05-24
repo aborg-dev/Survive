@@ -1,4 +1,4 @@
-package survive.server;
+package survive.common.world;
 
 /**
  * Created with IntelliJ IDEA.

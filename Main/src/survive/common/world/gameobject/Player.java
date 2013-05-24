@@ -1,4 +1,4 @@
-package survive.common.gameobject;
+package survive.common.world.gameobject;
 
 /**
  * Created with IntelliJ IDEA.

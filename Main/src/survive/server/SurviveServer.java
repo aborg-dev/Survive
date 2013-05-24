@@ -3,8 +3,9 @@ package survive.server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import survive.common.gameobject.GameObject;
-import survive.common.gameobject.Player;
+import survive.common.world.WorldConstrains;
+import survive.common.world.gameobject.GameObject;
+import survive.common.world.gameobject.Player;
 import survive.common.network.*;
 
 import java.io.IOException;
@@ -86,16 +87,24 @@ public class SurviveServer {
 		connection.setUserName(login.name);
 		User user = new User(name);
 		addUser(user);
+
 		Player player = world.addPlayer(name);
+		sendWorldInfo(connection);
+		AddGameObject addPlayerGameObject = new AddGameObject(player);
+		server.sendToAllTCP(addPlayerGameObject);
+
+		LOGGER.info("User " + name + " logged in.");
+	}
+
+	void sendWorldInfo(UserConnection connection) {
+		String name = connection.userName;
+
+		connection.sendTCP(world.getWorldConstrains());
 
 		for (GameObject gameObject : world.getPlayerGameObjects(name)) {
 			AddGameObject addGameObject = new AddGameObject(gameObject);
 			connection.sendTCP(addGameObject);
 		}
-
-		AddGameObject addPlayerGameObject = new AddGameObject(player);
-		server.sendToAllTCP(addPlayerGameObject);
-		LOGGER.info("User " + name + " logged in.");
 	}
 
 	private void loggedOut(String name) {

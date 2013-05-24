@@ -1,4 +1,7 @@
-package survive.common.gameobject;
+package survive.common.world.gameobject;
+
+import survive.common.utils.Direction;
+import survive.common.utils.Position;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,5 +15,10 @@ public class Character extends GameObject {
 		super(id);
 	}
 
-	public int x, y;
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	Position position;
+	Direction direction;
 }

@@ -1,9 +1,10 @@
 package survive.server;
 
-import com.esotericsoftware.minlog.Log;
-import survive.common.gameobject.GameObject;
-import survive.common.gameobject.Player;
-import survive.common.gameobject.Character;
+import survive.common.utils.Position;
+import survive.common.world.WorldConstrains;
+import survive.common.world.gameobject.GameObject;
+import survive.common.world.gameobject.Player;
+import survive.common.world.gameobject.Character;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,10 @@ public class World {
 	}
 
 	public void putInRandomPosition(Character character) {
-		character.x = random.nextInt() % worldConstrains.getHeight();
-		character.y = random.nextInt() % worldConstrains.getWidth();
+		Position randomPosition = new Position();
+		randomPosition.x = random.nextInt() % worldConstrains.getHeight();
+		randomPosition.y = random.nextInt() % worldConstrains.getWidth();
+		character.setPosition(randomPosition);
 	}
 
 	public Player addPlayer(String name) {
@@ -66,4 +69,11 @@ public class World {
 		return lastGameObjectId.getAndAdd(1);
 	}
 
+	public WorldConstrains getWorldConstrains() {
+		return worldConstrains;
+	}
+
+	public void update(float delta) {
+
+	}
 }
