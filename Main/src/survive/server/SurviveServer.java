@@ -48,19 +48,22 @@ public class SurviveServer {
 					final Login login = (Login) object;
 
 					if (!isValidName(login.name)) {
+						connection.sendTCP(LoginResponse.INCORRECT_NAME);
 						connection.close();
-						return; // Send incorrectNameResponse
 					}
 
 					if (connection.getUserName() != null) {
-						return; // Send alreadyLoggedInResponse
+						connection.sendTCP(LoginResponse.ALREADY_LOGGED_IN);
+						return;
 					}
 
 					if (users.containsKey(login.name)) {
-						return; // Send userWithThisLoginIsAlreadyLoggedInResponse
+						connection.sendTCP(LoginResponse.NAME_IS_USED);
+						return;
 					}
 
 					loggedIn(connection, login);
+					connection.sendTCP(LoginResponse.SUCCESS);
 					return;
 				}
 			}

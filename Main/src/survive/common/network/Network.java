@@ -21,5 +21,6 @@ public class Network {
 		kryo.register(Player.class);
 		kryo.register(AddGameObject.class);
 		kryo.register(RemoveGameObject.class);
+		kryo.register(LoginResponse.class);
 	}
 }
