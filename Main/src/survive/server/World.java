@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * To change this template use File | Settings | File Templates.
  */
 public class World {
+	private final static Logger LOGGER = Logger.getLogger(World.class.getName());
+
 	private ConcurrentHashMap<Integer, GameObject> gameObjects = new ConcurrentHashMap<Integer, GameObject>();
 	private ConcurrentHashMap<String, Integer> playerId = new ConcurrentHashMap<String, Integer>();
 	private AtomicInteger lastGameObjectId = new AtomicInteger(0);
@@ -27,12 +30,12 @@ public class World {
 
 	World() {
 		worldConstrains = new WorldConstrains(128, 128);
-		Log.info("World created.");
+		LOGGER.info("World created.");
 	}
 
 	public void addGameObject(GameObject gameObject) {
 		gameObjects.put(gameObject.getId(), gameObject);
-		Log.debug("Game object " + gameObject.getId() + " added.");
+		LOGGER.fine("Game object " + gameObject.getId() + " added.");
 	}
 
 	public void putInRandomPosition(Character character) {
