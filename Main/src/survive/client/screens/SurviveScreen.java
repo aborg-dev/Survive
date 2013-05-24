@@ -34,6 +34,8 @@ public abstract class SurviveScreen implements Screen {
 		this.width = width;
 		this.height = height;
 		stage.setViewport(width, height, false);
+		surviveClient.WIDTH = width;
+		surviveClient.HEIGHT = height;
 	}
 
 	@Override
