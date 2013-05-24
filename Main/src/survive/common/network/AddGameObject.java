@@ -1,6 +1,6 @@
 package survive.common.network;
 
-import survive.common.gameobject.GameObject;
+import survive.common.world.gameobject.GameObject;
 
 /**
  * Created with IntelliJ IDEA.

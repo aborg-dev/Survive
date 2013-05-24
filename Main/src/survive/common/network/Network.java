@@ -2,7 +2,9 @@ package survive.common.network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
-import survive.common.gameobject.Player;
+import survive.common.world.WorldConstrains;
+import survive.common.world.gameobject.NPC;
+import survive.common.world.gameobject.Player;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,8 +21,10 @@ public class Network {
 		kryo.register(Login.class);
 		kryo.register(Character.class);
 		kryo.register(Player.class);
+		kryo.register(NPC.class);
 		kryo.register(AddGameObject.class);
 		kryo.register(RemoveGameObject.class);
 		kryo.register(LoginResponse.class);
+		kryo.register(WorldConstrains.class);
 	}
 }
