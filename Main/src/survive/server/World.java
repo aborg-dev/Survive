@@ -1,5 +1,8 @@
 package survive.server;
 
+import survive.common.network.SetDirection;
+import survive.common.network.SetMovement;
+import survive.common.utils.Direction;
 import survive.common.utils.Position;
 import survive.common.world.WorldConstrains;
 import survive.common.world.gameobject.GameObject;
@@ -59,14 +62,14 @@ public class World {
 		return playerId.get(playerName);
 	}
 
-	public Iterable<GameObject> getPlayerGameObjects(String playerName) {
+	public Iterable<GameObject> getGameObjectsForPlayer(String playerName) {
 		List<GameObject> playerGameObjects = new ArrayList<GameObject>();
 		playerGameObjects.addAll(gameObjects.values());
 		return playerGameObjects;
 	}
 
 	private int getNewId() {
-		return lastGameObjectId.getAndAdd(1);
+		return lastGameObjectId.getAndIncrement();
 	}
 
 	public WorldConstrains getWorldConstrains() {
@@ -74,6 +77,20 @@ public class World {
 	}
 
 	public void update(float delta) {
+		for (GameObject gameObject : gameObjects.values()) {
+			gameObject.update(delta);
+		}
+	}
 
+	public void setPlayerMovement(String playerName, boolean isMoving) {
+		int playerId = getPlayerId(playerName);
+		Player player = (Player) gameObjects.get(playerId);
+		player.setMovement(isMoving);
+	}
+
+	public void setPlayerDirection(String playerName, Direction direction) {
+		int playerId = getPlayerId(playerName);
+		Player player = (Player) gameObjects.get(playerId);
+		player.setDirection(direction);
 	}
 }

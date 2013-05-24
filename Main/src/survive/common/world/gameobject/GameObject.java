@@ -20,5 +20,8 @@ public class GameObject {
 		this.id = id;
 	}
 
+	public void update(float delta) {
+	}
+
 	int id;
 }
