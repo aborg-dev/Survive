@@ -10,8 +10,11 @@ import survive.common.network.*;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 public class SurviveServer {
+	private final static Logger LOGGER = Logger.getLogger(SurviveServer.class.getName());
+
 	private Server server;
 	private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<String, User>();
 	private World world;
@@ -48,19 +51,22 @@ public class SurviveServer {
 					final Login login = (Login) object;
 
 					if (!isValidName(login.name)) {
+						connection.sendTCP(LoginResponse.INCORRECT_NAME);
 						connection.close();
-						return; // Send incorrectNameResponse
 					}
 
 					if (connection.getUserName() != null) {
-						return; // Send alreadyLoggedInResponse
+						connection.sendTCP(LoginResponse.ALREADY_LOGGED_IN);
+						return;
 					}
 
 					if (users.containsKey(login.name)) {
-						return; // Send userWithThisLoginIsAlreadyLoggedInResponse
+						connection.sendTCP(LoginResponse.NAME_IS_USED);
+						return;
 					}
 
 					loggedIn(connection, login);
+					connection.sendTCP(LoginResponse.SUCCESS);
 					return;
 				}
 			}
@@ -68,12 +74,12 @@ public class SurviveServer {
 
 		server.bind(Network.port);
 		server.start();
-		Log.info("Server started at port " + Network.port);
+		LOGGER.info("Server started at port " + Network.port);
 	}
 
 	private void addUser(User user) {
 		users.put(user.getName(), user);
-		Log.debug("User " + user.getName() + " added.");
+		LOGGER.fine("User " + user.getName() + " added.");
 	}
 
 	private void loggedIn(UserConnection connection, Login login) {
@@ -90,7 +96,7 @@ public class SurviveServer {
 
 		AddGameObject addPlayerGameObject = new AddGameObject(player);
 		server.sendToAllTCP(addPlayerGameObject);
-		Log.info("User " + name + " logged in.");
+		LOGGER.info("User " + name + " logged in.");
 	}
 
 	private void loggedOut(String name) {
@@ -98,7 +104,7 @@ public class SurviveServer {
 		int playerId = world.getPlayerId(name);
 		RemoveGameObject removeGameObject = new RemoveGameObject(playerId);
 		server.sendToAllTCP(removeGameObject);
-		Log.info("User " + name + " logged out.");
+		LOGGER.info("User " + name + " logged out.");
 	}
 
 	private boolean isValidName(String name) {
