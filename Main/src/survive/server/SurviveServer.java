@@ -11,13 +11,6 @@ import survive.common.network.*;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Created with IntelliJ IDEA.
- * User: iiotep9huy
- * Date: 5/21/13
- * Time: 11:45 PM
- * To change this template use File | Settings | File Templates.
- */
 public class SurviveServer {
 	private Server server;
 	private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<String, User>();
