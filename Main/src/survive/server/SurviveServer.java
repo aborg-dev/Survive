@@ -1,9 +1,9 @@
 package survive.server;
 
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import survive.common.world.WorldConstrains;
 import survive.common.world.gameobject.GameObject;
 import survive.common.world.gameobject.Player;
 import survive.common.network.*;
@@ -18,6 +18,8 @@ public class SurviveServer {
 	private Server server;
 	private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<String, User>();
 	private World world;
+	private final float updateDelta = 50;
+	private final int sleepTime = 100;
 
 	public SurviveServer() {
 	}
@@ -32,6 +34,18 @@ public class SurviveServer {
 
 		// Read world params from config
 		world = new World();
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				world.update(updateDelta);
+				try {
+					Thread.sleep(sleepTime);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		server.addListener(new Listener() {
 			@Override
@@ -69,6 +83,16 @@ public class SurviveServer {
 					connection.sendTCP(LoginResponse.SUCCESS);
 					return;
 				}
+
+				if (object instanceof SetMovement) {
+					if (connection.userName == null) {
+						connection.close();
+						return;
+					}
+
+					world.setPlayerMovement(connection.userName, (SetMovement) object);
+					return;
+				}
 			}
 		});
 
@@ -101,7 +125,7 @@ public class SurviveServer {
 
 		connection.sendTCP(world.getWorldConstrains());
 
-		for (GameObject gameObject : world.getPlayerGameObjects(name)) {
+		for (GameObject gameObject : world.getGameObjectsForPlayer(name)) {
 			AddGameObject addGameObject = new AddGameObject(gameObject);
 			connection.sendTCP(addGameObject);
 		}

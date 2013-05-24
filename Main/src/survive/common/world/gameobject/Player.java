@@ -1,5 +1,7 @@
 package survive.common.world.gameobject;
 
+import survive.common.network.SetMovement;
+
 /**
  * Created with IntelliJ IDEA.
  * User: iiotep9huy
@@ -18,6 +20,10 @@ public class Player extends Character {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setMovement(SetMovement movement) {
+		isMoving = movement.isMoving;
 	}
 
 	String name;

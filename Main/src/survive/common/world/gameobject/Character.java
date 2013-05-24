@@ -19,6 +19,16 @@ public class Character extends GameObject {
 		this.position = position;
 	}
 
+
+	@Override
+	public void update(float delta) {
+		if (isMoving) {
+			position.x += direction.angleCos * delta;
+			position.y += direction.angleSin * delta;
+		}
+	}
+
+	boolean isMoving;
 	Position position;
 	Direction direction;
 }
