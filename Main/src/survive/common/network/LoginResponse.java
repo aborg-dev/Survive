@@ -10,6 +10,6 @@ package survive.common.network;
 public enum LoginResponse {
 	SUCCESS,
 	INCORRECT_NAME,
-	ALREADY_LOGGED_IN,
-	NAME_IS_USED
+	YOU_ARE_ALREADY_LOGGED_IN,
+	NAME_IS_ALREADY_IN_USE
 }

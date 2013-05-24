@@ -3,7 +3,6 @@ package survive.server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import com.esotericsoftware.minlog.Log;
 import survive.common.gameobject.GameObject;
 import survive.common.gameobject.Player;
 import survive.common.network.*;
@@ -56,12 +55,12 @@ public class SurviveServer {
 					}
 
 					if (connection.getUserName() != null) {
-						connection.sendTCP(LoginResponse.ALREADY_LOGGED_IN);
+						connection.sendTCP(LoginResponse.YOU_ARE_ALREADY_LOGGED_IN);
 						return;
 					}
 
 					if (users.containsKey(login.name)) {
-						connection.sendTCP(LoginResponse.NAME_IS_USED);
+						connection.sendTCP(LoginResponse.NAME_IS_ALREADY_IN_USE);
 						return;
 					}
 
