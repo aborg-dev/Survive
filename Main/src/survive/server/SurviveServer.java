@@ -52,9 +52,12 @@ public class SurviveServer {
 			public void disconnected(Connection c) {
 				UserConnection connection = (UserConnection) c;
 				String userName = connection.getUserName();
-				if (users.containsKey(userName)) {
-					loggedOut(userName);
+				if (userName != null) {
+					if (users.containsKey(userName)) {
+						loggedOut(userName);
+					}
 				}
+				LOGGER.info("User disconnected.");
 			}
 
 			@Override
