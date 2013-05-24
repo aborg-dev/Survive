@@ -22,12 +22,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class UITest extends GdxTest {
@@ -81,6 +83,20 @@ public class UITest extends GdxTest {
 		final Slider slider = new Slider(0, 10, 1, false, skin);
 		TextField textfield = new TextField("", skin);
 		textfield.setMessageText("Click here!");
+
+		for (EventListener listener : textfield.getListeners()) {
+			if (listener instanceof ClickListener) {
+				System.out.println("Listener found");
+//				ClickListener clickListener = (ChangeListener)listener;
+				if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)) {
+					System.out.println("Left control is pressed");
+				}
+				if (Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT)) {
+					System.out.println("Right control is pressed");
+				}
+			}
+		}
+
 		SelectBox dropdown = new SelectBox(new String[]{"Android", "Windows", "Linux", "OSX", "Android", "Windows", "Linux", "OSX", "Android", "Windows", "Linux", "OSX", "Android", "Windows", "Linux", "OSX", "Android", "Windows", "Linux", "OSX", "Android", "Windows", "Linux", "OSX", "Android", "Windows", "Linux", "OSX"}, skin);
 		Image imageActor = new Image(image2);
 		ScrollPane scrollPane = new ScrollPane(imageActor);

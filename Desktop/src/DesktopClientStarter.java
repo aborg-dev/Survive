@@ -10,5 +10,6 @@ public class DesktopClientStarter {
 		cfg.width = 800;
 		cfg.height = 480;
 		new LwjglApplication(new UITest(), cfg);
+//		new LwjglApplication(new SurviveClient(cfg.width, cfg.height), cfg);
 	}
 }

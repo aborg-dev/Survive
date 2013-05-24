@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Timer;
 import survive.client.SurviveClient;
 
 public class MainMenu extends SurviveScreen {
@@ -47,8 +48,21 @@ public class MainMenu extends SurviveScreen {
 		loginField.setCursorPosition(2);
 		//loginField.
 
+//		ClickListener
+
 		stage.addActor(playButton);
 		stage.addActor(loginField);
+
+		class MyTask extends Timer.Task {
+			@Override
+			public void run() {
+				System.out.println("Run!");
+			}
+		}
+		MyTask task = new MyTask();
+		float repeatInitialTime = 1.0f;
+		float repeatTime = 64.0f;
+		Timer.schedule(task, repeatInitialTime, repeatTime);
 	}
 
 	@Override
@@ -63,4 +77,6 @@ public class MainMenu extends SurviveScreen {
 	public void draw() {
 		stage.draw();
 	}
+
+
 }
