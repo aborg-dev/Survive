@@ -1,6 +1,6 @@
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import survive.client.SurviveClient;
+import survive.client.UITest;
 
 public class DesktopClientStarter {
 	public static void main(String[] args) {
@@ -9,6 +9,6 @@ public class DesktopClientStarter {
 		cfg.useGL20 = true;
 		cfg.width = 800;
 		cfg.height = 480;
-		new LwjglApplication(new SurviveClient(cfg.width, cfg.height), cfg);
+		new LwjglApplication(new UITest(), cfg);
 	}
 }

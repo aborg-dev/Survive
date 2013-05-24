@@ -1,0 +1,48 @@
+{
+    resources: {
+        com.badlogic.gdx.graphics.Color: {
+red: { r: 1, g: 0, b: 0, a: 1 },
+green: { r: 0, g: 1, b: 0, a: 1 }
+},
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+default-font: { file: default.fnt }
+},
+com.badlogic.gdx.graphics.g2d.NinePatch: {
+default-nine :
+[
+{width: 1, height: 1, x: 50, y: 50}
+]
+},
+com.badlogic.gdx.graphics.g2d.TextureRegion: {
+default-region: {width: 10, height: 12, x: 0, y: 0}
+}
+
+},
+styles: {
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+default: {
+font: default-font, fontColor: green
+}
+},
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+default: {
+font: default-font, fontColor: red
+}
+},
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+default: {
+font: default-font, selectedPatch: default-nine
+}
+},
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+default: {
+font: default-font, background: default-nine, listBackground: default-nine, listSelection: default-nine
+}
+},
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+default: {
+slider: default-nine, knob: default-region
+}
+}
+}
+}
