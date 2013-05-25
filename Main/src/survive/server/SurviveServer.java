@@ -65,7 +65,7 @@ public class SurviveServer {
 					}
 				}
 			}
-		}).run();
+		}).start();
 
 		server.addListener(new Listener() {
 			@Override
