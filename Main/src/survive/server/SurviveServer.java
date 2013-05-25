@@ -150,8 +150,8 @@ public class SurviveServer {
 		User user = new User(name);
 		addUser(user);
 
-		Player player = world.addPlayer(name);
 		sendWorldInfo(connection);
+		Player player = world.addPlayer(name);
 		connection.sendTCP(new PlayerInfo(player.getId()));
 		AddGameObject addPlayerGameObject = new AddGameObject(player);
 		server.sendToAllTCP(addPlayerGameObject);
