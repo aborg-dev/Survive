@@ -7,9 +7,9 @@ import com.badlogic.gdx.math.Vector3;
 import survive.client.SurviveClient;
 import survive.client.World;
 import survive.common.network.AddGameObject;
+import survive.common.network.CharacterPositionChange;
 import survive.common.network.SetDirection;
 import survive.common.network.SetMovement;
-import survive.common.network.TestPackage;
 import survive.common.utils.Direction;
 import survive.common.utils.Position;
 import survive.common.world.gameobject.Character;
@@ -122,6 +122,13 @@ public class GameScreen extends SurviveScreen {
 			AddGameObject addGameObject = (AddGameObject)object;
 			surviveClient.getWorld().addGameObject(addGameObject.gameObject);
 			LOGGER.info("Game object received");
+		}
+		if (object instanceof CharacterPositionChange) {
+			CharacterPositionChange change = (CharacterPositionChange)object;
+			if (surviveClient.getWorld().getGameObjects().containsKey(change.id)) {
+				Character character = (Character)surviveClient.getWorld().getGameObjects().get(change.id);
+				character.setPosition(change.position);
+			}
 		}
 	}
 }

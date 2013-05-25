@@ -81,6 +81,9 @@ public class SurviveClient extends Game {
 		if (object instanceof AddGameObject) {
 			gameScreen.pushMessage(object);
 		}
+		if (object instanceof CharacterPositionChange) {
+			gameScreen.pushMessage(object);
+		}
 	}
 
 	public void setWorld(World world) {
