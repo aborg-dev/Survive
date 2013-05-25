@@ -9,18 +9,16 @@ import survive.client.screens.GameScreen;
 import survive.client.screens.LoginScreen;
 import survive.client.screens.MainMenu;
 import survive.common.network.Login;
+import survive.common.network.LoginResponse;
 import survive.common.network.Network;
+import survive.common.world.WorldConstrains;
+import survive.common.world.gameobject.GameObject;
 
 import java.io.IOException;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Logger;
 
 public class SurviveClient extends Game {
 	private final static Logger LOGGER = Logger.getLogger(SurviveClient.class.getName());
-
-	// Queue for received messages from SurviveClient to translate them to the screen
-	private BlockingDeque<Object> messages = new LinkedBlockingDeque<Object>();
 
 	public int WIDTH;
 	public int HEIGHT;
@@ -64,9 +62,21 @@ public class SurviveClient extends Game {
 			public void received(Connection connection, Object object) {
 				super.received(connection, object);
 				LOGGER.info("Received object " + object.getClass().getSimpleName());
-				messages.push(object);
+				forwardMessage(object);
 			}
 		});
+	}
+
+	private void forwardMessage(Object object) {
+		if (object instanceof LoginResponse) {
+			loginScreen.pushMessage(object);
+		}
+		if (object instanceof WorldConstrains) {
+			loginScreen.pushMessage(object);
+		}
+		if (object instanceof GameObject) {
+			gameScreen.pushMessage(object);
+		}
 	}
 
 	public void setWorld(World world) {
@@ -75,10 +85,6 @@ public class SurviveClient extends Game {
 
 	public World getWorld() {
 		return world;
-	}
-
-	public Object pollMessage() {
-		return messages.poll();
 	}
 
 	public void login(String name) {

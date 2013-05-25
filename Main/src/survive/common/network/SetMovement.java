@@ -1,7 +1,5 @@
 package survive.common.network;
 
-import com.badlogic.gdx.utils.Timer;
-
 /**
  * User: iiotep9huy
  * Date: 5/24/13

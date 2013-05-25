@@ -6,11 +6,17 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import survive.client.SurviveClient;
 
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
+
 public abstract class SurviveScreen implements Screen {
 	protected final SurviveClient surviveClient;
 	protected final Stage stage;
 	protected int width;
 	protected int height;
+
+	// Queue for received messages from SurviveClient to translate them to the screen
+	private BlockingDeque<Object> messages = new LinkedBlockingDeque<Object>();
 
 	abstract protected void update(float delta);
 
@@ -32,10 +38,18 @@ public abstract class SurviveScreen implements Screen {
 		screen.show();
 	}
 
+	public final void pushMessage(Object object) {
+		messages.push(object);
+	}
+
+	protected final Object pollMessage() {
+		return messages.poll();
+	}
+
 	@Override
 	public final void render(float delta) {
 		Object message;
-		while ((message = surviveClient.pollMessage()) != null) {
+		while ((message = pollMessage()) != null) {
 			receive(message);
 		}
 		update(delta);
