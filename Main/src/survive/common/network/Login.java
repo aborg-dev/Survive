@@ -10,6 +10,9 @@ package survive.common.network;
 public class Login {
 	public String name;
 
+	public Login() {
+	}
+
 	public Login(String name) {
 		this.name = name;
 	}

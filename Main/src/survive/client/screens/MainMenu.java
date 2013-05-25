@@ -65,7 +65,6 @@ public class MainMenu extends SurviveScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
-				LOGGER.info("Clecked");
 				surviveClient.login(loginField.getText());
 				LOGGER.info("Login sent");
 			}

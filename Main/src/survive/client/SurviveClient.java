@@ -13,6 +13,7 @@ import survive.common.network.Network;
 import survive.common.world.WorldConstrains;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SurviveClient extends Game {
@@ -23,10 +24,11 @@ public class SurviveClient extends Game {
 
 	private static final String serverAddress = "localhost";
 	private static final int TCP_PORT = Network.port;
+	private static final int TIMEOUT = 5000;
 	private Client client;
 
 	// It needs for pushing into Listener
-	private SurviveClient self;
+	private SurviveClient self = this;
 	private World world;
 
 	public SurviveClient(int WIDTH, int HEIGHT) {
@@ -40,26 +42,22 @@ public class SurviveClient extends Game {
 		Network.register(client);
 		LOGGER.info("Network registration succeeded");
 
-		try {
-			LOGGER.info("Connection to " + serverAddress + ":" + String.valueOf(TCP_PORT));
-			client.connect(5000, serverAddress, TCP_PORT);
-			LOGGER.info("Connection established");
-		} catch (IOException e) {
-			LOGGER.info("Connection refused");
-			e.printStackTrace();
-		}
-
 		client.addListener(new Listener() {
 			@Override
+			public void connected(Connection connection) {
+				LOGGER.info("Connected to server");
+			}
+
+			@Override
 			public void disconnected(Connection connection) {
-				super.disconnected(connection);
+				LOGGER.info("Disconnected from server");
 			}
 
 			@Override
 			public void received(Connection connection, Object object) {
 				super.received(connection, object);
 
-				LOGGER.info("Received a message");
+				LOGGER.fine("Received a message " + object.getClass().getSimpleName());
 
 				if (object instanceof LoginResponse) {
 					LoginResponse response = (LoginResponse) object;
@@ -69,10 +67,13 @@ public class SurviveClient extends Game {
 							LOGGER.info("Logged in");
 							break;
 						case INCORRECT_NAME:
+							LOGGER.info("Incorrect name");
 							break;
 						case YOU_ARE_ALREADY_LOGGED_IN:
+							LOGGER.info("You are already logged in");
 							break;
 						case NAME_IS_ALREADY_IN_USE:
+							LOGGER.info("Name is already in use");
 							break;
 					}
 				}
@@ -83,6 +84,16 @@ public class SurviveClient extends Game {
 				}
 			}
 		});
+
+		try {
+			LOGGER.info("Connecting to " + serverAddress + ":" + String.valueOf(TCP_PORT));
+			client.connect(TIMEOUT, serverAddress, TCP_PORT);
+			LOGGER.info("Connection established");
+		} catch (IOException e) {
+			LOGGER.info("Connection refused");
+			e.printStackTrace();
+		}
+
 	}
 
 	public void changeScreen(Screen screen) {
@@ -101,5 +112,10 @@ public class SurviveClient extends Game {
 	@Override
 	public void create() {
 		changeScreen(new MainMenu(this));
+	}
+
+	public static void main(String[] args) {
+		LOGGER.setLevel(Level.FINE);
+		new SurviveClient(640, 480);
 	}
 }

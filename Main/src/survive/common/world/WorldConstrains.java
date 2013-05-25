@@ -8,6 +8,9 @@ package survive.common.world;
  * To change this template use File | Settings | File Templates.
  */
 public class WorldConstrains {
+	public WorldConstrains() {
+	}
+
 	public WorldConstrains(int height, int width) {
 		this.height = height;
 		this.width = width;

@@ -2,6 +2,8 @@ package survive.common.network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
+import survive.common.utils.Direction;
+import survive.common.utils.Position;
 import survive.common.world.WorldConstrains;
 import survive.common.world.gameobject.NPC;
 import survive.common.world.gameobject.Player;
@@ -21,6 +23,8 @@ public class Network {
 		kryo.register(Login.class);
 		kryo.register(Character.class);
 		kryo.register(Player.class);
+		kryo.register(Position.class);
+		kryo.register(Direction.class);
 		kryo.register(NPC.class);
 		kryo.register(AddGameObject.class);
 		kryo.register(SetMovement.class);

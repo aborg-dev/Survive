@@ -8,6 +8,9 @@ package survive.common.world.gameobject;
  * To change this template use File | Settings | File Templates.
  */
 public class NPC extends Character {
+	public NPC() {
+	}
+
 	public NPC(int id) {
 		super(id);
 	}

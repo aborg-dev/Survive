@@ -12,6 +12,9 @@ import survive.common.utils.Direction;
  * To change this template use File | Settings | File Templates.
  */
 public class Player extends Character {
+	public Player() {
+	}
+
 	public Player(int id) {
 		super(id);
 	}

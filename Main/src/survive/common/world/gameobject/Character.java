@@ -11,6 +11,9 @@ import survive.common.utils.Position;
  * To change this template use File | Settings | File Templates.
  */
 public class Character extends GameObject {
+	public Character() {
+	}
+
 	public Character(int id) {
 		super(id);
 	}

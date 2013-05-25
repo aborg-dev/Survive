@@ -8,6 +8,9 @@ package survive.common.world.gameobject;
  * To change this template use File | Settings | File Templates.
  */
 public class GameObject {
+	public GameObject() {
+	}
+
 	public GameObject(int id) {
 		this.id = id;
 	}

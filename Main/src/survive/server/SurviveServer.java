@@ -34,20 +34,26 @@ public class SurviveServer {
 
 		// Read world params from config
 		world = new World();
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				world.update(updateDelta);
-				try {
-					Thread.sleep(sleepTime);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//		new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				world.update(updateDelta);
+//				try {
+//					Thread.sleep(sleepTime);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 
 		server.addListener(new Listener() {
+			@Override
+			public void connected(Connection connection) {
+				LOGGER.info("User connected");
+				connection.sendTCP(new Login("aaa"));
+			}
+
 			@Override
 			public void disconnected(Connection c) {
 				UserConnection connection = (UserConnection) c;
@@ -57,12 +63,14 @@ public class SurviveServer {
 						loggedOut(userName);
 					}
 				}
-				LOGGER.info("User disconnected.");
+				LOGGER.info("User disconnected");
 			}
 
 			@Override
 			public void received(Connection c, Object object) {
 				UserConnection connection = (UserConnection) c;
+
+				LOGGER.fine("Received a message " + object.getClass().getSimpleName());
 
 				if (object instanceof Login) {
 					final Login login = (Login) object;
@@ -115,7 +123,7 @@ public class SurviveServer {
 
 	private void addUser(User user) {
 		users.put(user.getName(), user);
-		LOGGER.fine("User " + user.getName() + " added.");
+		LOGGER.fine("User " + user.getName() + " added");
 	}
 
 	private void loggedIn(UserConnection connection, Login login) {
@@ -148,7 +156,7 @@ public class SurviveServer {
 		int playerId = world.getPlayerId(name);
 		RemoveGameObject removeGameObject = new RemoveGameObject(playerId);
 		server.sendToAllTCP(removeGameObject);
-		LOGGER.info("User " + name + " logged out.");
+		LOGGER.info("User " + name + " logged out");
 	}
 
 	private boolean isValidName(String name) {
