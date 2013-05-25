@@ -4,25 +4,26 @@ import com.badlogic.gdx.Game;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import survive.client.screens.Fonts;
 import survive.client.screens.GameScreen;
 import survive.client.screens.LoginScreen;
 import survive.client.screens.MainMenu;
 import survive.common.network.Login;
+import survive.common.network.LoginResponse;
 import survive.common.network.Network;
+import survive.common.world.WorldConstrains;
+import survive.common.world.gameobject.GameObject;
 
 import java.io.IOException;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Logger;
 
 public class SurviveClient extends Game {
 	private final static Logger LOGGER = Logger.getLogger(SurviveClient.class.getName());
 
-	// Queue for received messages from SurviveClient to translate them to the screen
-	private BlockingDeque<Object> messages = new LinkedBlockingDeque<Object>();
-
 	public int WIDTH;
 	public int HEIGHT;
+
+	public Fonts fonts;
 
 	public MainMenu mainMenu;
 	public LoginScreen loginScreen;
@@ -61,17 +62,20 @@ public class SurviveClient extends Game {
 			public void received(Connection connection, Object object) {
 				super.received(connection, object);
 				LOGGER.info("Received object " + object.getClass().getSimpleName());
-				messages.push(object);
+				forwardMessage(object);
 			}
 		});
+	}
 
-		try {
-			LOGGER.info("Connecting to " + serverAddress + ":" + String.valueOf(TCP_PORT));
-			client.connect(TIMEOUT, serverAddress, TCP_PORT);
-			LOGGER.info("Connection established");
-		} catch (IOException e) {
-			LOGGER.info("Connection refused");
-			e.printStackTrace();
+	private void forwardMessage(Object object) {
+		if (object instanceof LoginResponse) {
+			loginScreen.pushMessage(object);
+		}
+		if (object instanceof WorldConstrains) {
+			loginScreen.pushMessage(object);
+		}
+		if (object instanceof GameObject) {
+			gameScreen.pushMessage(object);
 		}
 	}
 
@@ -83,17 +87,26 @@ public class SurviveClient extends Game {
 		return world;
 	}
 
-	public Object pollMessage() {
-		return messages.poll();
-	}
-
 	public void login(String name) {
+		if (!client.isConnected()) {
+			try {
+				LOGGER.info("Connecting to " + serverAddress + ":" + String.valueOf(TCP_PORT));
+				client.connect(TIMEOUT, serverAddress, TCP_PORT);
+				LOGGER.info("Connection established");
+			} catch (IOException e) {
+				LOGGER.info("Connection refused");
+				e.printStackTrace();
+			}
+		}
+
 		LOGGER.info("Trying to login. Name: " + name);
 		client.sendTCP(new Login(name));
 	}
 
 	@Override
 	public void create() {
+		fonts = new Fonts();
+
 		mainMenu = new MainMenu(this);
 		loginScreen = new LoginScreen(this);
 		gameScreen = new GameScreen(this);

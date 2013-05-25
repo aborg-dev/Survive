@@ -1,13 +1,12 @@
 package survive.server;
 
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import survive.common.network.*;
+import survive.common.world.gameobject.Character;
 import survive.common.world.gameobject.GameObject;
 import survive.common.world.gameobject.Player;
-import survive.common.world.gameobject.Character;
-import survive.common.network.*;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;

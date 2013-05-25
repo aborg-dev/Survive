@@ -1,7 +1,5 @@
 package survive.common.world.gameobject;
 
-import survive.common.network.SetDirection;
-import survive.common.network.SetMovement;
 import survive.common.utils.Direction;
 
 /**

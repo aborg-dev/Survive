@@ -1,13 +1,11 @@
 package survive.server;
 
-import survive.common.network.SetDirection;
-import survive.common.network.SetMovement;
 import survive.common.utils.Direction;
 import survive.common.utils.Position;
 import survive.common.world.WorldConstrains;
+import survive.common.world.gameobject.Character;
 import survive.common.world.gameobject.GameObject;
 import survive.common.world.gameobject.Player;
-import survive.common.world.gameobject.Character;
 
 import java.util.ArrayList;
 import java.util.List;

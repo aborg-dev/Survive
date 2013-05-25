@@ -20,7 +20,7 @@ public class LoginScreen extends SurviveScreen {
 	public LoginScreen(SurviveClient surviveClient) {
 		super(surviveClient);
 
-		style.font = menuFont;
+		style.font = surviveClient.fonts.menuFont;
 		style.fontColor = Color.WHITE;
 		loginLabel = new Label("Login...", style);
 	}
