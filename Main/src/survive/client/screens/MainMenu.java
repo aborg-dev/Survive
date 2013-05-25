@@ -1,11 +1,8 @@
 package survive.client.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -19,10 +16,6 @@ import java.util.logging.Logger;
 
 public class MainMenu extends SurviveScreen {
 	private final static Logger LOGGER = Logger.getLogger(MainMenu.class.getName());
-
-	private static final String fontName = "Main/data/fonts/CarnevaleeFreakshow.ttf";
-	private FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(fontName));
-	private BitmapFont menuFont = generator.generateFont(32);
 
 	private TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 	private TextButton playButton;
@@ -43,7 +36,6 @@ public class MainMenu extends SurviveScreen {
 		textButtonStyle.downFontColor = Color.YELLOW;
 
 		playButton = new TextButton("Play", textButtonStyle);
-		//playButton.setPosition(-menuFont.getBounds(playButton.getText()).width / 2, -menuFont.getBounds(playButton.getText()).height);
 
 		Pixmap whitePixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
 		whitePixmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -67,7 +59,8 @@ public class MainMenu extends SurviveScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				LOGGER.info("Clicked at (" + x + ", " + y + ")");
-				surviveClient.login(loginField.getText());
+				surviveClient.loginScreen.setLoginName(loginField.getText());
+				changeScreen(surviveClient.loginScreen);
 				LOGGER.info("Login sent");
 			}
 		});

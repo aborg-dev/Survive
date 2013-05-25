@@ -1,10 +1,11 @@
 package survive.client;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import survive.client.screens.GameScreen;
+import survive.client.screens.LoginScreen;
 import survive.client.screens.MainMenu;
 import survive.common.network.Login;
 import survive.common.network.Network;
@@ -12,7 +13,6 @@ import survive.common.network.Network;
 import java.io.IOException;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SurviveClient extends Game {
@@ -24,13 +24,15 @@ public class SurviveClient extends Game {
 	public int WIDTH;
 	public int HEIGHT;
 
+	public MainMenu mainMenu;
+	public LoginScreen loginScreen;
+	public GameScreen gameScreen;
+
 	private static final String serverAddress = "localhost";
 	private static final int TCP_PORT = Network.port;
 	private static final int TIMEOUT = 5000;
 	private Client client;
 
-	// It needs for pushing into Listener
-	private SurviveClient self = this;
 	private World world;
 
 	public SurviveClient(int WIDTH, int HEIGHT) {
@@ -59,33 +61,6 @@ public class SurviveClient extends Game {
 			public void received(Connection connection, Object object) {
 				super.received(connection, object);
 				messages.push(object);
-				return;
-				/*
-				LOGGER.fine("Received a message " + object.getClass().getSimpleName());
-
-				if (object instanceof LoginResponse) {
-					LoginResponse response = (LoginResponse) object;
-					switch (response) {
-						case SUCCESS:
-							changeScreen(new GameScreen(self));
-							LOGGER.info("Logged in");
-							break;
-						case INCORRECT_NAME:
-							LOGGER.info("Incorrect name");
-							break;
-						case YOU_ARE_ALREADY_LOGGED_IN:
-							LOGGER.info("You are already logged in");
-							break;
-						case NAME_IS_ALREADY_IN_USE:
-							LOGGER.info("Name is already in use");
-							break;
-					}
-				}
-
-				if (object instanceof WorldConstrains) {
-					WorldConstrains constrains = (WorldConstrains) object;
-					world = new World(constrains);
-				}  */
 			}
 		});
 
@@ -97,20 +72,18 @@ public class SurviveClient extends Game {
 			LOGGER.info("Connection refused");
 			e.printStackTrace();
 		}
+	}
 
+	public void setWorld(World world) {
+		this.world = world;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 
 	public Object pollMessage() {
 		return messages.poll();
-	}
-
-	public void changeScreen(Screen screen) {
-		Screen currentScreen = getScreen();
-		if (currentScreen != null) {
-			currentScreen.hide();
-		}
-		setScreen(screen);
-		screen.show();
 	}
 
 	public void login(String name) {
@@ -120,11 +93,11 @@ public class SurviveClient extends Game {
 
 	@Override
 	public void create() {
-		changeScreen(new MainMenu(this));
-	}
+		mainMenu = new MainMenu(this);
+		loginScreen = new LoginScreen(this);
+		gameScreen = new GameScreen(this);
 
-	public static void main(String[] args) {
-		LOGGER.setLevel(Level.FINE);
-		new SurviveClient(640, 480);
+		setScreen(mainMenu);
+		mainMenu.show();
 	}
 }

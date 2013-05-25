@@ -1,6 +1,8 @@
 package survive.client.screens;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import survive.client.SurviveClient;
+import survive.client.World;
 
 public class GameScreen extends SurviveScreen {
 	public GameScreen(SurviveClient surviveClient) {
@@ -13,6 +15,14 @@ public class GameScreen extends SurviveScreen {
 
 	@Override
 	protected void draw() {
+		SpriteBatch batch = stage.getSpriteBatch();
+		if (surviveClient.getWorld() != null) {
+			World world = surviveClient.getWorld();
+			batch.begin();
+			String text = world.getWidth() + ":" + world.getHeight();
+			gameFont.draw(batch, text, 50, 100);
+			batch.end();
+		}
 	}
 
 	@Override

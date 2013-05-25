@@ -15,5 +15,11 @@ public class World {
 		height = constrains.getHeight();
 	}
 
+	public int getWidth() {
+		return width;
+	}
 
+	public int getHeight() {
+		return height;
+	}
 }
