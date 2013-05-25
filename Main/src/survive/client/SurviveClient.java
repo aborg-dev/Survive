@@ -8,10 +8,7 @@ import survive.client.screens.Fonts;
 import survive.client.screens.GameScreen;
 import survive.client.screens.LoginScreen;
 import survive.client.screens.MainMenu;
-import survive.common.network.AddGameObject;
-import survive.common.network.Login;
-import survive.common.network.LoginResponse;
-import survive.common.network.Network;
+import survive.common.network.*;
 import survive.common.world.WorldConstrains;
 
 import java.io.IOException;
@@ -67,11 +64,18 @@ public class SurviveClient extends Game {
 		});
 	}
 
+	public void sendMessage(Object object) {
+		client.sendTCP(object);
+	}
+
 	private void forwardMessage(Object object) {
 		if (object instanceof LoginResponse) {
 			loginScreen.pushMessage(object);
 		}
 		if (object instanceof WorldConstrains) {
+			loginScreen.pushMessage(object);
+		}
+		if (object instanceof PlayerInfo) {
 			loginScreen.pushMessage(object);
 		}
 		if (object instanceof AddGameObject) {

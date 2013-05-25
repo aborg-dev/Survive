@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import survive.client.SurviveClient;
 import survive.client.World;
 import survive.common.network.LoginResponse;
+import survive.common.network.PlayerInfo;
 import survive.common.world.WorldConstrains;
 
 import java.util.logging.Logger;
@@ -17,6 +18,9 @@ public class LoginScreen extends SurviveScreen {
 
 	private Label.LabelStyle style = new Label.LabelStyle();
 	private Label loginLabel;
+
+	private boolean worldConstrainsReady = false;
+	private boolean playerInfoReady = false;
 
 	public LoginScreen(SurviveClient surviveClient) {
 		super(surviveClient);
@@ -41,6 +45,8 @@ public class LoginScreen extends SurviveScreen {
 	public void show() {
 		super.show();
 		// KOCTbIJIb
+		worldConstrainsReady = false;
+		playerInfoReady = false;
 		if (needLogin) {
 			needLogin = false;
 			LOGGER.info("Call login method of SurviveClient");
@@ -53,6 +59,11 @@ public class LoginScreen extends SurviveScreen {
 	@Override
 	protected void update(float delta) {
 		stage.getCamera().position.set(0.0f, 0.0f, 0.0f);
+		if (worldConstrainsReady && playerInfoReady) {
+			worldConstrainsReady = false;
+			playerInfoReady = false;
+			changeScreen(surviveClient.gameScreen);
+		}
 	}
 
 	@Override
@@ -68,7 +79,6 @@ public class LoginScreen extends SurviveScreen {
 			LoginResponse response = (LoginResponse) object;
 			switch (response) {
 				case SUCCESS:
-					changeScreen(surviveClient.gameScreen);
 					LOGGER.info("Logged in");
 					break;
 				case INCORRECT_NAME:
@@ -87,8 +97,15 @@ public class LoginScreen extends SurviveScreen {
 		}
 
 		if (object instanceof WorldConstrains) {
+			worldConstrainsReady = true;
 			WorldConstrains constrains = (WorldConstrains) object;
 			surviveClient.setWorld(new World(constrains));
+		}
+
+		if (object instanceof PlayerInfo) {
+			playerInfoReady = true;
+			PlayerInfo playerInfo = (PlayerInfo)object;
+			surviveClient.getWorld().setPlayerInfo(playerInfo);
 		}
 	}
 }

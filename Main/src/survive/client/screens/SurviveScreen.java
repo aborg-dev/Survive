@@ -37,8 +37,12 @@ public abstract class SurviveScreen implements Screen {
 		messages.push(object);
 	}
 
-	protected final Object pollMessage() {
+	private final Object pollMessage() {
 		return messages.poll();
+	}
+
+	protected final void sendMessage(Object object) {
+		surviveClient.sendMessage(object);
 	}
 
 	@Override

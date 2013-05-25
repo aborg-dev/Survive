@@ -9,5 +9,13 @@ import survive.common.utils.Direction;
  * Project: Survive
  */
 public class SetDirection {
+	public SetDirection() {
+
+	}
+
+	public SetDirection(Direction direction) {
+		this.direction = direction;
+	}
+
 	public Direction direction;
 }

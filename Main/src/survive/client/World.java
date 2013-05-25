@@ -1,5 +1,6 @@
 package survive.client;
 
+import survive.common.network.PlayerInfo;
 import survive.common.world.WorldConstrains;
 import survive.common.world.gameobject.GameObject;
 
@@ -11,6 +12,7 @@ public class World {
 	private final static Logger LOGGER = Logger.getLogger(World.class.getName());
 
 	private Map<Integer, GameObject> gameObjects = new HashMap<Integer, GameObject>();
+	private PlayerInfo playerInfo;
 
 	private int width;
 	private int height;
@@ -35,5 +37,13 @@ public class World {
 
 	public Map<Integer, GameObject> getGameObjects() {
 		return gameObjects;
+	}
+
+	public PlayerInfo getPlayerInfo() {
+		return playerInfo;
+	}
+
+	public void setPlayerInfo(PlayerInfo playerInfo) {
+		this.playerInfo = playerInfo;
 	}
 }
