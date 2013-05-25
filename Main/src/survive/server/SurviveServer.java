@@ -88,7 +88,7 @@ public class SurviveServer {
 			public void received(Connection c, Object object) {
 				UserConnection connection = (UserConnection) c;
 
-				LOGGER.fine("Received a message " + object.getClass().getSimpleName());
+				LOGGER.info("Received a message " + object.getClass().getSimpleName());
 
 				if (object instanceof Login) {
 					final Login login = (Login) object;
@@ -115,8 +115,11 @@ public class SurviveServer {
 
 				if (object instanceof SetMovement) {
 					if (connection.userName == null) {
+						LOGGER.info("userName in null in SetMovement");
 						connection.close();
 						return;
+					} else {
+						LOGGER.info(connection.userName + ": SetMovement");
 					}
 
 					world.setPlayerMovement(connection.userName, ((SetMovement) object).isMoving);
@@ -125,8 +128,11 @@ public class SurviveServer {
 
 				if (object instanceof SetDirection) {
 					if (connection.userName == null) {
+						LOGGER.info("userName in null in SetDirection");
 						connection.close();
 						return;
+					} else {
+						LOGGER.info(connection.userName + ": SetDirection");
 					}
 
 					world.setPlayerDirection(connection.userName, ((SetDirection) object).direction);
@@ -151,6 +157,7 @@ public class SurviveServer {
 		addUser(user);
 
 		Player player = world.addPlayer(name);
+		connection.sendTCP(world.getWorldConstrains());
 		connection.sendTCP(new PlayerInfo(player.getId()));
 		sendWorldInfo(connection);
 		AddGameObject addPlayerGameObject = new AddGameObject(player);
@@ -161,8 +168,6 @@ public class SurviveServer {
 
 	void sendWorldInfo(UserConnection connection) {
 		String name = connection.userName;
-
-		connection.sendTCP(world.getWorldConstrains());
 
 		for (GameObject gameObject : world.getGameObjectsForPlayer(name)) {
 			AddGameObject addGameObject = new AddGameObject(gameObject);

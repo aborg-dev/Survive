@@ -8,6 +8,10 @@ package survive.common.utils;
  * To change this template use File | Settings | File Templates.
  */
 public class Direction {
+	public Direction() {
+		this(0, 0);
+	}
+
 	public Direction(int x, int y) {
 		float length = (float) Math.sqrt(x * x + y * y);
 		angleCos = x / length;

@@ -7,11 +7,12 @@ package survive.common.network;
  * Project: Survive
  */
 public class SetMovement {
-	public SetMovement() {
+	public boolean isMoving;
 
+	public SetMovement() {
 	}
+
 	public SetMovement(boolean isMoving) {
 		this.isMoving = isMoving;
 	}
-	public boolean isMoving;
 }

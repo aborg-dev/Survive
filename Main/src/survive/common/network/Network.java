@@ -20,6 +20,7 @@ public class Network {
 
 	static public void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
+		kryo.register(TestPackage.class);
 		kryo.register(Login.class);
 		kryo.register(Character.class);
 		kryo.register(Player.class);

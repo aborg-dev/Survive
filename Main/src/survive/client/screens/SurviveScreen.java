@@ -34,7 +34,11 @@ public abstract class SurviveScreen implements Screen {
 	}
 
 	public final void pushMessage(Object object) {
-		messages.push(object);
+		try {
+			messages.putLast(object);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private final Object pollMessage() {

@@ -9,6 +9,7 @@ import survive.client.World;
 import survive.common.network.AddGameObject;
 import survive.common.network.SetDirection;
 import survive.common.network.SetMovement;
+import survive.common.network.TestPackage;
 import survive.common.utils.Direction;
 import survive.common.utils.Position;
 import survive.common.world.gameobject.Character;

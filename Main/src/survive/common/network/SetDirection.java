@@ -10,7 +10,6 @@ import survive.common.utils.Direction;
  */
 public class SetDirection {
 	public SetDirection() {
-
 	}
 
 	public SetDirection(Direction direction) {

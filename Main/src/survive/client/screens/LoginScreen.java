@@ -97,15 +97,18 @@ public class LoginScreen extends SurviveScreen {
 		}
 
 		if (object instanceof WorldConstrains) {
+			LOGGER.info("Setting world constrains");
 			worldConstrainsReady = true;
 			WorldConstrains constrains = (WorldConstrains) object;
 			surviveClient.setWorld(new World(constrains));
 		}
 
 		if (object instanceof PlayerInfo) {
+			LOGGER.info("Setting player info");
 			playerInfoReady = true;
 			PlayerInfo playerInfo = (PlayerInfo)object;
-			surviveClient.getWorld().setPlayerInfo(playerInfo);
+			World world = surviveClient.getWorld();
+			world.setPlayerInfo(playerInfo);
 		}
 	}
 }
