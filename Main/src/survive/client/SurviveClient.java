@@ -5,19 +5,21 @@ import com.badlogic.gdx.Screen;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import survive.client.screens.GameScreen;
 import survive.client.screens.MainMenu;
 import survive.common.network.Login;
-import survive.common.network.LoginResponse;
 import survive.common.network.Network;
-import survive.common.world.WorldConstrains;
 
 import java.io.IOException;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SurviveClient extends Game {
 	private final static Logger LOGGER = Logger.getLogger(SurviveClient.class.getName());
+
+	// Queue for received messages from SurviveClient to translate them to the screen
+	private BlockingDeque<Object> messages = new LinkedBlockingDeque<Object>();
 
 	public int WIDTH;
 	public int HEIGHT;
@@ -56,7 +58,9 @@ public class SurviveClient extends Game {
 			@Override
 			public void received(Connection connection, Object object) {
 				super.received(connection, object);
-
+				messages.push(object);
+				return;
+				/*
 				LOGGER.fine("Received a message " + object.getClass().getSimpleName());
 
 				if (object instanceof LoginResponse) {
@@ -81,7 +85,7 @@ public class SurviveClient extends Game {
 				if (object instanceof WorldConstrains) {
 					WorldConstrains constrains = (WorldConstrains) object;
 					world = new World(constrains);
-				}
+				}  */
 			}
 		});
 
@@ -94,6 +98,10 @@ public class SurviveClient extends Game {
 			e.printStackTrace();
 		}
 
+	}
+
+	public Object pollMessage() {
+		return messages.poll();
 	}
 
 	public void changeScreen(Screen screen) {

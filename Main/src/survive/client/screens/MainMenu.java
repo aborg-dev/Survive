@@ -79,7 +79,7 @@ public class MainMenu extends SurviveScreen {
 	}
 
 	@Override
-	public void update(float delta) {
+	protected void update(float delta) {
 		stage.act(delta);
 		menuGroup.setPosition(-menuGroup.getWidth() / 2, -menuGroup.getHeight() / 2);
 		stage.getCamera().position.set(0.0f, 0.0f, 0.0f);
@@ -87,7 +87,11 @@ public class MainMenu extends SurviveScreen {
 	}
 
 	@Override
-	public void draw() {
+	protected void draw() {
 		stage.draw();
+	}
+
+	@Override
+	protected void receive(Object object) {
 	}
 }

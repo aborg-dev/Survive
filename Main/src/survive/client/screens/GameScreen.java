@@ -8,10 +8,14 @@ public class GameScreen extends SurviveScreen {
 	}
 
 	@Override
-	public void update(float delta) {
+	protected void update(float delta) {
 	}
 
 	@Override
-	public void draw() {
+	protected void draw() {
+	}
+
+	@Override
+	protected void receive(Object object) {
 	}
 }

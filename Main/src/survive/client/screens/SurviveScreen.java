@@ -12,9 +12,11 @@ public abstract class SurviveScreen implements Screen {
 	protected int width;
 	protected int height;
 
-	abstract public void update(float delta);
+	abstract protected void update(float delta);
 
-	abstract public void draw();
+	abstract protected void draw();
+
+	abstract protected void receive(Object object);
 
 	public SurviveScreen(SurviveClient surviveClient) {
 		this.surviveClient = surviveClient;
@@ -23,6 +25,10 @@ public abstract class SurviveScreen implements Screen {
 
 	@Override
 	public final void render(float delta) {
+		Object message;
+		while ((message = surviveClient.pollMessage()) != null) {
+			receive(message);
+		}
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		update(delta);
