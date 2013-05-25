@@ -18,8 +18,8 @@ public class SurviveServer {
 	private Server server;
 	private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<String, User>();
 	private World world;
-	private final float updateDelta = 50;
-	private final int sleepTime = 2000;
+	private final float updateDelta = 7;
+	private final int sleepTime = 20;
 
 	public SurviveServer() {
 	}
@@ -46,7 +46,7 @@ public class SurviveServer {
 					}
 					if (name != null) {
 						for (GameObject gameObject : world.getGameObjectsForPlayer(users.keys().nextElement())) {
-							LOGGER.info("Sending " + gameObject.getClass().getSimpleName());
+							LOGGER.fine("Sending " + gameObject.getClass().getSimpleName());
 							if (gameObject instanceof Character) {
 								CharacterPositionChange positionChange = new CharacterPositionChange();
 								Character character = (Character) gameObject;
