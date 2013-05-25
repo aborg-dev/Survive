@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import survive.client.SurviveClient;
 
@@ -42,7 +43,7 @@ public class MainMenu extends SurviveScreen {
 		textButtonStyle.downFontColor = Color.YELLOW;
 
 		playButton = new TextButton("Play", textButtonStyle);
-		playButton.setPosition(-menuFont.getBounds(playButton.getText()).width / 2, -menuFont.getBounds(playButton.getText()).height);
+		//playButton.setPosition(-menuFont.getBounds(playButton.getText()).width / 2, -menuFont.getBounds(playButton.getText()).height);
 
 		Pixmap whitePixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
 		whitePixmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -65,24 +66,22 @@ public class MainMenu extends SurviveScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
+				LOGGER.info("Clicked at (" + x + ", " + y + ")");
 				surviveClient.login(loginField.getText());
 				LOGGER.info("Login sent");
 			}
 		});
 
+		menuGroup.setTransform(true);
+		menuGroup.setAlignment(Align.left);
+		menuGroup.pack();
 		stage.addActor(menuGroup);
 	}
 
 	@Override
 	public void update(float delta) {
 		stage.act(delta);
-
-		/*if (loginField.getMessageText().equals("")) {
-			loginField.setPosition(-loginField.getStyle().font.getBounds(loginField.getText()).width / 2, 0.0f);
-		} else {
-			loginField.setPosition(-loginField.getStyle().font.getBounds(loginField.getMessageText()).width / 2, 0.0f);
-		}*/
-
+		menuGroup.setPosition(-menuGroup.getWidth() / 2, -menuGroup.getHeight() / 2);
 		stage.getCamera().position.set(0.0f, 0.0f, 0.0f);
 		stage.getCamera().update();
 	}

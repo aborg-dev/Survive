@@ -106,6 +106,7 @@ public class SurviveClient extends Game {
 	}
 
 	public void login(String name) {
+		LOGGER.info("Trying to login. Name: " + name);
 		client.sendTCP(new Login(name));
 	}
 
