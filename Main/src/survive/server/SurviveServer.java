@@ -46,7 +46,6 @@ public class SurviveServer {
 						name = users.keys().nextElement();
 					}
 					if (name != null) {
-						LOGGER.info("Sample name " + name);
 						for (GameObject gameObject : world.getGameObjectsForPlayer(users.keys().nextElement())) {
 							LOGGER.info("Sending " + gameObject.getClass().getSimpleName());
 							if (gameObject instanceof Character) {
@@ -154,6 +153,7 @@ public class SurviveServer {
 
 		Player player = world.addPlayer(name);
 		sendWorldInfo(connection);
+		connection.sendTCP(new PlayerInfo(player.getId()));
 		AddGameObject addPlayerGameObject = new AddGameObject(player);
 		server.sendToAllTCP(addPlayerGameObject);
 
