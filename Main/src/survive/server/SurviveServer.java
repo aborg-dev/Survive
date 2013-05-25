@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import survive.common.world.gameobject.GameObject;
 import survive.common.world.gameobject.Player;
+import survive.common.world.gameobject.Character;
 import survive.common.network.*;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class SurviveServer {
 	private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<String, User>();
 	private World world;
 	private final float updateDelta = 50;
-	private final int sleepTime = 100;
+	private final int sleepTime = 2000;
 
 	public SurviveServer() {
 	}
@@ -34,18 +35,37 @@ public class SurviveServer {
 
 		// Read world params from config
 		world = new World();
-//		new Thread(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				world.update(updateDelta);
-//				try {
-//					Thread.sleep(sleepTime);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					world.update(updateDelta);
+					String name = null;
+					if (!users.isEmpty()) {
+						name = users.keys().nextElement();
+					}
+					if (name != null) {
+						LOGGER.info("Sample name " + name);
+						for (GameObject gameObject : world.getGameObjectsForPlayer(users.keys().nextElement())) {
+							LOGGER.info("Sending " + gameObject.getClass().getSimpleName());
+							if (gameObject instanceof Character) {
+								CharacterPositionChange positionChange = new CharacterPositionChange();
+								Character character = (Character) gameObject;
+								positionChange.id = character.getId();
+								positionChange.position = character.getPosition();
+								server.sendToAllTCP(positionChange);
+							}
+						}
+					}
+					try {
+						Thread.sleep(sleepTime);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).run();
 
 		server.addListener(new Listener() {
 			@Override

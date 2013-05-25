@@ -26,6 +26,14 @@ public class Character extends GameObject {
 		this.direction = direction;
 	}
 
+	public Position getPosition() {
+		return position;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
 	@Override
 	public void update(float delta) {
 		if (isMoving) {

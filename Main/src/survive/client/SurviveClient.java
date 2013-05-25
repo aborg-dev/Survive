@@ -60,6 +60,7 @@ public class SurviveClient extends Game {
 			@Override
 			public void received(Connection connection, Object object) {
 				super.received(connection, object);
+				LOGGER.info("Received object " + object.getClass().getSimpleName());
 				messages.push(object);
 			}
 		});
