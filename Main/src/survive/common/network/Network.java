@@ -33,5 +33,6 @@ public class Network {
 		kryo.register(LoginResponse.class);
 		kryo.register(WorldConstrains.class);
 		kryo.register(CharacterPositionChange.class);
+		kryo.register(PlayerInfo.class);
 	}
 }
