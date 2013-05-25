@@ -3,8 +3,6 @@ package survive.client.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import survive.client.SurviveClient;
 
@@ -13,11 +11,6 @@ public abstract class SurviveScreen implements Screen {
 	protected final Stage stage;
 	protected int width;
 	protected int height;
-
-	protected static final String fontName = "Main/data/fonts/CarnevaleeFreakshow.ttf";
-	protected FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(fontName));
-	protected BitmapFont menuFont = generator.generateFont(32);
-	protected BitmapFont gameFont = generator.generateFont(28);
 
 	abstract protected void update(float delta);
 

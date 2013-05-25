@@ -20,7 +20,7 @@ public class GameScreen extends SurviveScreen {
 			World world = surviveClient.getWorld();
 			batch.begin();
 			String text = world.getWidth() + ":" + world.getHeight();
-			gameFont.draw(batch, text, 50, 100);
+			surviveClient.fonts.gameFont.draw(batch, text, 50, 100);
 			batch.end();
 		}
 	}
