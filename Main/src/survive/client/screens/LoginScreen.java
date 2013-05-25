@@ -13,6 +13,7 @@ public class LoginScreen extends SurviveScreen {
 	private final static Logger LOGGER = Logger.getLogger(MainMenu.class.getName());
 
 	private String loginName = "";
+	private boolean needLogin = false;
 
 	private Label.LabelStyle style = new Label.LabelStyle();
 	private Label loginLabel;
@@ -23,24 +24,40 @@ public class LoginScreen extends SurviveScreen {
 		style.font = surviveClient.fonts.menuFont;
 		style.fontColor = Color.WHITE;
 		loginLabel = new Label("Login...", style);
+		loginLabel.setPosition(-loginLabel.getWidth() / 2, -loginLabel.getHeight() / 2);
+
+		stage.addActor(loginLabel);
 	}
 
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
 	}
 
+	public void setNeedLogin(boolean needLogin) {
+		this.needLogin = needLogin;
+	}
+
 	@Override
 	public void show() {
 		super.show();
-		surviveClient.login(loginName);
+		// KOCTbIJIb
+		if (needLogin) {
+			needLogin = false;
+			LOGGER.info("Call login method of SurviveClient");
+			if (!surviveClient.login(loginName)) {
+				changeScreen(surviveClient.mainMenu);
+			}
+		}
 	}
 
 	@Override
 	protected void update(float delta) {
+		stage.getCamera().position.set(0.0f, 0.0f, 0.0f);
 	}
 
 	@Override
 	protected void draw() {
+		stage.draw();
 	}
 
 	@Override
@@ -57,6 +74,14 @@ public class LoginScreen extends SurviveScreen {
 				case INCORRECT_NAME:
 					changeScreen(surviveClient.mainMenu);
 					LOGGER.info("Incorrect name");
+					break;
+				case YOU_ARE_ALREADY_LOGGED_IN:
+					changeScreen(surviveClient.mainMenu);
+					LOGGER.info("You are already logged in");
+					break;
+				case NAME_IS_ALREADY_IN_USE:
+					changeScreen(surviveClient.mainMenu);
+					LOGGER.info("This name is already in use");
 					break;
 			}
 		}

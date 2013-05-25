@@ -87,7 +87,7 @@ public class SurviveClient extends Game {
 		return world;
 	}
 
-	public void login(String name) {
+	public boolean login(String name) {
 		if (!client.isConnected()) {
 			try {
 				LOGGER.info("Connecting to " + serverAddress + ":" + String.valueOf(TCP_PORT));
@@ -95,12 +95,16 @@ public class SurviveClient extends Game {
 				LOGGER.info("Connection established");
 			} catch (IOException e) {
 				LOGGER.info("Connection refused");
-				e.printStackTrace();
+				return false;
 			}
 		}
 
+		LOGGER.info("Connection is ok");
+
 		LOGGER.info("Trying to login. Name: " + name);
 		client.sendTCP(new Login(name));
+
+		return true;
 	}
 
 	@Override

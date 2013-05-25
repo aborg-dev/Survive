@@ -60,8 +60,9 @@ public class MainMenu extends SurviveScreen {
 				super.clicked(event, x, y);
 				LOGGER.info("Clicked at (" + x + ", " + y + ")");
 				surviveClient.loginScreen.setLoginName(loginField.getText());
+				surviveClient.loginScreen.setNeedLogin(true);
 				changeScreen(surviveClient.loginScreen);
-				LOGGER.info("Login sent");
+				LOGGER.info("Go to LoginScreen");
 			}
 		});
 
