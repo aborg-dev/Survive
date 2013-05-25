@@ -30,12 +30,7 @@ public abstract class SurviveScreen implements Screen {
 	}
 
 	protected final void changeScreen(Screen screen) {
-		Screen currentScreen = surviveClient.getScreen();
-		if (currentScreen != null) {
-			currentScreen.hide();
-		}
 		surviveClient.setScreen(screen);
-		screen.show();
 	}
 
 	public final void pushMessage(Object object) {
