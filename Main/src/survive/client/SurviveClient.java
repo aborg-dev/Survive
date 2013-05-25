@@ -8,11 +8,11 @@ import survive.client.screens.Fonts;
 import survive.client.screens.GameScreen;
 import survive.client.screens.LoginScreen;
 import survive.client.screens.MainMenu;
+import survive.common.network.AddGameObject;
 import survive.common.network.Login;
 import survive.common.network.LoginResponse;
 import survive.common.network.Network;
 import survive.common.world.WorldConstrains;
-import survive.common.world.gameobject.GameObject;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -74,7 +74,7 @@ public class SurviveClient extends Game {
 		if (object instanceof WorldConstrains) {
 			loginScreen.pushMessage(object);
 		}
-		if (object instanceof GameObject) {
+		if (object instanceof AddGameObject) {
 			gameScreen.pushMessage(object);
 		}
 	}

@@ -17,5 +17,5 @@ public class AddGameObject {
 		this.gameObject = gameObject;
 	}
 
-	GameObject gameObject;
+	public GameObject gameObject;
 }
