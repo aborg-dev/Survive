@@ -30,7 +30,7 @@ public class MainMenu extends SurviveScreen {
 
 		menuGroup = new VerticalGroup();
 
-		textButtonStyle.font = menuFont;
+		textButtonStyle.font = surviveClient.fonts.menuFont;
 		textButtonStyle.fontColor = Color.WHITE;
 		textButtonStyle.overFontColor = Color.RED;
 		textButtonStyle.downFontColor = Color.YELLOW;
@@ -43,7 +43,7 @@ public class MainMenu extends SurviveScreen {
 		Texture whiteTexture = new Texture(whitePixmap);
 		Image whiteImage = new Image(whiteTexture);
 
-		textFieldStyle.font = menuFont;
+		textFieldStyle.font = surviveClient.fonts.menuFont;
 		textFieldStyle.fontColor = Color.WHITE;
 		textFieldStyle.messageFontColor = Color.WHITE;
 		textFieldStyle.cursor = whiteImage.getDrawable();

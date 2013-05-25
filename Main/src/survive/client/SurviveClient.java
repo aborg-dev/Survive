@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import survive.client.screens.Fonts;
 import survive.client.screens.GameScreen;
 import survive.client.screens.LoginScreen;
 import survive.client.screens.MainMenu;
@@ -23,6 +24,8 @@ public class SurviveClient extends Game {
 
 	public int WIDTH;
 	public int HEIGHT;
+
+	public Fonts fonts;
 
 	public MainMenu mainMenu;
 	public LoginScreen loginScreen;
@@ -63,15 +66,6 @@ public class SurviveClient extends Game {
 				messages.push(object);
 			}
 		});
-
-		try {
-			LOGGER.info("Connecting to " + serverAddress + ":" + String.valueOf(TCP_PORT));
-			client.connect(TIMEOUT, serverAddress, TCP_PORT);
-			LOGGER.info("Connection established");
-		} catch (IOException e) {
-			LOGGER.info("Connection refused");
-			e.printStackTrace();
-		}
 	}
 
 	public void setWorld(World world) {
@@ -87,12 +81,25 @@ public class SurviveClient extends Game {
 	}
 
 	public void login(String name) {
+		if (!client.isConnected()) {
+			try {
+				LOGGER.info("Connecting to " + serverAddress + ":" + String.valueOf(TCP_PORT));
+				client.connect(TIMEOUT, serverAddress, TCP_PORT);
+				LOGGER.info("Connection established");
+			} catch (IOException e) {
+				LOGGER.info("Connection refused");
+				e.printStackTrace();
+			}
+		}
+
 		LOGGER.info("Trying to login. Name: " + name);
 		client.sendTCP(new Login(name));
 	}
 
 	@Override
 	public void create() {
+		fonts = new Fonts();
+
 		mainMenu = new MainMenu(this);
 		loginScreen = new LoginScreen(this);
 		gameScreen = new GameScreen(this);
